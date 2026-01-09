@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body & Emotion Explorer Camp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #1565c0;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #5e92f3;
+            font-size: 1.4rem;
+        }
+        
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .star-counter {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stars {
+            color: gold;
+            font-size: 1.8rem;
+        }
+        
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 4px solid transparent;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .module-card.active {
+            border-color: #42a5f5;
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .module-title {
+            color: #1565c0;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .module-desc {
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .game-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            min-height: 500px;
+            margin-bottom: 30px;
+        }
+        
+        .game-title {
+            color: #1565c0;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .emotion-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        
+        .emotion-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            min-width: 120px;
+        }
+        
+        .happy { background: #fff9c4; color: #f57f17; }
+        .angry { background: #ffcdd2; color: #c62828; }
+        .sad { background: #e1f5fe; color: #0277bd; }
+        .scared { background: #f3e5f5; color: #6a1b9a; }
+        .calm { background: #c8e6c9; color: #2e7d32; }
+        .excited { background: #ffecb3; color: #ff8f00; }
+        
+        .emotion-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .emotion-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        .body-canvas-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #bodyCanvas {
+            background: #f9f9f9;
+            border-radius: 15px;
+            max-width: 100%;
+            cursor: pointer;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .quiz-option {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .quiz-option:hover {
+            background: #bbdefb;
+            transform: scale(1.03);
+        }
+        
+        .quiz-option.correct {
+            background: #c8e6c9;
+            animation: pulse 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: #ffcdd2;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .breathing-animation {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .breath-circle {
+            width: 150px;
+            height: 150px;
+            background: #81d4fa;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 4s ease-in-out;
+        }
+        
+        .breath-text {
+            font-size: 1.3rem;
+            color: #1565c0;
+            margin-top: 20px;
+        }
+        
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .positive-feedback {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .neutral-feedback {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .primary-btn {
+            background: #42a5f5;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background: #2196f3;
+            transform: scale(1.05);
+        }
+        
+        .secondary-btn {
+            background: #ce93d8;
+            color: white;
+        }
+        
+        .secondary-btn:hover {
+            background: #ba68c8;
+            transform: scale(1.05);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .sound-btn {
+            background: #ffcc80;
+            color: #e65100;
+            margin: 10px;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        
+        .sound-board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .scenario {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .reaction-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .reaction-option {
+            background: #e8eaf6;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .reaction-option:hover {
+            background: #c5cae9;
+        }
+        
+        .completed {
+            position: relative;
+        }
+        
+        .completed::after {
+            content: "✓";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4caf50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .modules {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .game-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Body & Emotion Explorer Camp</h1>
+            <p class="subtitle">Learn how your body feels with different emotions!</p>
+        </header>
+        
+        <div class="dashboard">
+            <div class="star-counter">
+                <span class="stars">⭐⭐⭐</span>
+                <span id="starCount">0</span> Emotion Stars
+            </div>
+        </div>
+        
+        <div class="modules">
+            <div class="module-card" data-module="bodyMap">
+                <div class="module-icon">🧭</div>
+                <h3 class="module-title">Emotion Body Map</h3>
+                <p class="module-desc">Touch body parts to see how emotions feel in your body</p>
+            </div>
+            
+            <div class="module-card" data-module="bodyQuiz">
+                <div class="module-icon">❓</div>
+                <h3 class="module-title">Body Response Quiz</h3>
+                <p class="module-desc">Test your knowledge about body signals</p>
+            </div>
+            
+            <div class="module-card" data-module="soundQuiz">
+                <div class="module-icon">🎵</div>
+                <h3 class="module-title">Emotion Sound Quiz</h3>
+                <p class="module-desc">Guess emotions from sounds and body clues</p>
+            </div>
+            
+            <div class="module-card" data-module="calmTools">
+                <div class="module-icon">🌿</div>
+                <h3 class="module-title">Calming Tools</h3>
+                <p class="module-desc">Learn breathing and grounding techniques</p>
+            </div>
+            
+            <div class="module-card" data-module="reactionGame">
+                <div class="module-icon">🎮</div>
+                <h3 class="module-title">Choose Your Reaction</h3>
+                <p class="module-desc">Practice responding to emotional situations</p>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <h2 class="game-title" id="gameTitle">Welcome to Emotion Explorer Camp!</h2>
+            <div id="gameContent">
+                <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 100px;">
+                    Select a module from above to start playing! 🌈
+                </p>
+            </div>
+            <div class="feedback" id="feedback"></div>
+            <div class="controls">
+                <button class="primary-btn hidden" id="nextBtn">Next</button>
+                <button class="secondary-btn hidden" id="backBtn">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const gameState = {
+            currentModule: null,
+            stars: 0,
+            completedModules: new Set(),
+            bodyMap: {
+                emotions: {
+                    happy: { color: '#FFF9C4', areas: ['heart', 'stomach', 'face'], description: 'Warm, light, bubbly feeling' },
+                    angry: { color: '#FFCDD2', areas: ['head', 'chest', 'hands'], description: 'Hot, tense, pounding feeling' },
+                    sad: { color: '#E1F5FE', areas: ['chest', 'throat', 'eyes'], description: 'Heavy, empty, slow feeling' },
+                    scared: { color: '#F3E5F5', areas: ['stomach', 'legs', 'heart'], description: 'Shaky, cold, fluttery feeling' },
+                    calm: { color: '#C8E6C9', areas: ['whole'], description: 'Peaceful, steady, relaxed feeling' },
+                    excited: { color: '#FFECB3', areas: ['heart', 'hands', 'feet'], description: 'Bouncy, energetic, tingly feeling' }
+                },
+                selectedEmotion: null
+            },
+            quiz: {
+                currentQuestion: 0,
+                questions: [
+                    {
+                        question: "When you're nervous, where might you feel butterflies?",
+                        options: ["Stomach", "Head", "Feet", "Ears"],
+                        correct: 0
+                    },
+                    {
+                        question: "Where do you feel heat when you're angry?",
+                        options: ["Chest and face", "Knees", "Elbows", "Back"],
+                        correct: 0
+                    },
+                    {
+                        question: "When scared, what might happen to your hands?",
+                        options: ["They shake", "They turn green", "They glow", "They get bigger"],
+                        correct: 0
+                    },
+                    {
+                        question: "Where do happy feelings often spread in your body?",
+                        options: ["All over!", "Just in toes", "Only in nose", "In your hair"],
+                        correct: 0
+                    }
+                ]
+            },
+            soundQuiz: {
+                sounds: [
+                    { emotion: 'happy', emoji: '😊', bodyClue: 'Big smile and bouncing' },
+                    { emotion: 'sad', emoji: '😢', bodyClue: 'Tears and slumped shoulders' },
+                    { emotion: 'angry', emoji: '😠', bodyClue: 'Hot face and clenched fists' },
+                    { emotion: 'scared', emoji: '😨', bodyClue: 'Shaking and wide eyes' }
+                ],
+                currentSound: 0
+            },
+            scenarios: [
+                {
+                    situation: "Your friend accidentally breaks your favorite toy.",
+                    reactions: [
+                        { text: "Yell and push them", outcome: "negative", message: "That might make both of you feel worse. Try taking a deep breath first." },
+                        { text: "Take 3 deep breaths, then tell them how you feel", outcome: "positive", message: "Great choice! Breathing helps calm your body before talking." },
+                        { text: "Cry and run away", outcome: "neutral", message: "It's okay to feel sad, but talking about it can help too." }
+                    ]
+                },
+                {
+                    situation: "You're about to perform on stage and feel butterflies.",
+                    reactions: [
+                        { text: "Do jumping jacks to use the energy", outcome: "positive", message: "Good idea! Moving can help with nervous energy." },
+                        { text: "Hide backstage and skip your turn", outcome: "negative", message: "You can do it! Remember to breathe." },
+                        { text: "Imagine the audience is cheering for you", outcome: "positive", message: "Excellent! Positive thinking helps your body feel calmer." }
+                    ]
+                }
+            ],
+            currentScenario: 0
+        };
+
+        // DOM Elements
+        const starCountEl = document.getElementById('starCount');
+        const moduleCards = document.querySelectorAll('.module-card');
+        const gameTitle = document.getElementById('gameTitle');
+        const gameContent = document.getElementById('gameContent');
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('nextBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        // Initialize
+        function init() {
+            updateStarDisplay();
+            setupModuleListeners();
+            setupControlListeners();
+        }
+
+        function updateStarDisplay() {
+            starCountEl.textContent = gameState.stars;
+        }
+
+        function addStars(count) {
+            gameState.stars += count;
+            updateStarDisplay();
+            
+            // Visual feedback
+            feedback.textContent = `+${count} ⭐ Earned!`;
+            feedback.className = 'feedback positive-feedback';
+            setTimeout(() => {
+                if (gameState.currentModule) {
+                    showFeedback('');
+                }
+            }, 2000);
+        }
+
+        function markModuleCompleted(module) {
+            gameState.completedModules.add(module);
+            const card = document.querySelector(`[data-module="${module}"]`);
+            card.classList.add('completed');
+        }
+
+        function setupModuleListeners() {
+            moduleCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const module = card.dataset.module;
+                    loadModule(module);
+                    
+                    // Update active state
+                    moduleCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                });
+            });
+        }
+
+        function setupControlListeners() {
+            nextBtn.addEventListener('click', handleNext);
+            backBtn.addEventListener('click', () => loadModule(null));
+        }
+
+        function loadModule(module) {
+            gameState.currentModule = module;
+            gameContent.innerHTML = '';
+            feedback.innerHTML = '';
+            feedback.className = 'feedback';
+            nextBtn.classList.add('hidden');
+            backBtn.classList.remove('hidden');
+            
+            if (!module) {
+                showMainMenu();
+                return;
+            }
+            
+            switch(module) {
+                case 'bodyMap':
+                    loadBodyMap();
+                    break;
+                case 'bodyQuiz':
+                    loadBodyQuiz();
+                    break;
+                case 'soundQuiz':
+                    loadSoundQuiz();
+                    break;
+                case 'calmTools':
+                    loadCalmTools();
+                    break;
+                case 'reactionGame':
+                    loadReactionGame();
+                    break;
+            }
+            
+            markModuleCompleted(module);
+        }
+
+        function showMainMenu() {
+            gameTitle.textContent = 'Welcome to Emotion Explorer Camp!';
+            gameContent.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🌈</div>
+                    <p style="font-size: 1.5rem; color: #555; margin-bottom: 30px;">
+                        Choose a module to learn about emotions and your body!
+                    </p>
+                    <div style="display: inline-block; background: #E3F2FD; padding: 20px; border-radius: 15px; max-width: 600px;">
+                        <h3 style="color: #1565C0; margin-bottom: 15px;">Today's Mission:</h3>
+                        <p style="color: #555; line-height: 1.6;">
+                            Explore all 5 modules and collect 10 stars!<br>
+                            Remember: All feelings are okay. It's what we do with them that matters.
+                        </p>
+                    </div>
+                </div>
+            `;
+            backBtn.classList.add('hidden');
+        }
+
+        // Module 1: Emotion Body Map
+        function loadBodyMap() {
+            gameTitle.textContent = 'Emotion Body Map';
+            gameContent.innerHTML = `
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <p style="text-align: center; font-size: 1.2rem; color: #555; margin-bottom: 20px;">
+                        Select an emotion, then click on body parts to see how they feel!
+                    </p>
+                    
+                    <div class="emotion-buttons" id="emotionButtons"></div>
+                    
+                    <div class="body-canvas-container">
+                        <canvas id="bodyCanvas" width="600" height="800"></canvas>
+                    </div>
+                    
+                    <div id="emotionDescription" style="text-align: center; margin-top: 20px; font-size: 1.3rem; color: #333;"></div>
+                </div>
+            `;
+            
+            // Create emotion buttons
+            const buttonsContainer = document.getElementById('emotionButtons');
+            for (const [emotion, data] of Object.entries(gameState.bodyMap.emotions)) {
+                const btn = document.createElement('button');
+                btn.className = `emotion-btn ${emotion}`;
+                btn.textContent = emotion.charAt(0).toUpperCase() + emotion.slice(1);
+                btn.onclick = () => selectEmotion(emotion);
+                buttonsContainer.appendChild(btn);
+            }
+            
+            // Initialize canvas
+            setTimeout(initBodyCanvas, 100);
+        }
+
+        function selectEmotion(emotion) {
+            gameState.bodyMap.selectedEmotion = emotion;
+            
+            // Update button states
+            document.querySelectorAll('.emotion-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === emotion) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update description
+            const descEl = document.getElementById('emotionDescription');
+            descEl.textContent = gameState.bodyMap.emotions[emotion].description;
+            
+            // Add stars for interaction
+            addStars(1);
+        }
+
+        function initBodyCanvas() {
+            const canvas = document.getElementById('bodyCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Body parts data
+            const bodyParts = {
+                head: { x: 300, y: 100, radius: 50 },
+                chest: { x: 300, y: 220, width: 180, height: 120 },
+                stomach: { x: 300, y: 360, width: 160, height: 100 },
+                heart: { x: 300, y: 250, radius: 30 },
+                hands: { x: 180, y: 300, radius: 40 },
+                feet: { x: 250, y: 600, width: 80, height: 120 },
+                legs: { x: 300, y: 500, width: 100, height: 200 },
+                face: { x: 300, y: 120, radius: 40 },
+                throat: { x: 300, y: 180, radius: 20 }
+            };
+            
+            function drawBody() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw body outline
+                ctx.fillStyle = '#FFE0B2';
+                ctx.strokeStyle = '#5D4037';
+                ctx.lineWidth = 3;
+                
+                // Head
+                ctx.beginPath();
+                ctx.arc(bodyParts.head.x, bodyParts.head.y, bodyParts.head.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                
+                // Body
+                ctx.beginPath();
+                ctx.roundRect(bodyParts.chest.x - bodyParts.chest.width/2, bodyParts.chest.y, 
+                            bodyParts.chest.width, bodyParts.chest.height, 20);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.roundRect(bodyParts.stomach.x - bodyParts.stomach.width/2, bodyParts.stomach.y,
+                            bodyParts.stomach.width, bodyParts.stomach.height, 15);
+                ctx.fill();
+                ctx.stroke();
+                
+                // Arms
+                ctx.beginPath();
+                ctx.moveTo(bodyParts.chest.x - bodyParts.chest.width/2, bodyParts.chest.y + 40);
+                ctx.lineTo(100, 400);
+                ctx.lineWidth = 40;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(bodyParts.chest.x + bodyParts.chest.width/2, bodyParts.chest.y + 40);
+                ctx.lineTo(500, 400);
+                ctx.lineWidth = 40;
+                ctx.stroke();
+                
+                // Legs
+                ctx.beginPath();
+                ctx.moveTo(bodyParts.stomach.x - 30, bodyParts.stomach.y + bodyParts.stomach.height);
+                ctx.lineTo(250, 700);
+                ctx.lineWidth = 50;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(bodyParts.stomach.x + 30, bodyParts.stomach.y + bodyParts.stomach.height);
+                ctx.lineTo(350, 700);
+                ctx.lineWidth = 50;
+                ctx.stroke();
+                
+                // Draw body part labels on hover
+                canvas.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    let hoveredPart = null;
+                    for (const [part, data] of Object.entries(bodyParts)) {
+                        if ('radius' in data) {
+                            const dist = Math.sqrt((x - data.x) ** 2 + (y - data.y) ** 2);
+                            if (dist <= data.radius) {
+                                hoveredPart = part;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (hoveredPart && gameState.bodyMap.selectedEmotion) {
+                        const emotion = gameState.bodyMap.selectedEmotion;
+                        const emotionData = gameState.bodyMap.emotions[emotion];
+                        
+                        if (emotionData.areas.includes('whole') || emotionData.areas.includes(hoveredPart)) {
+                            canvas.style.cursor = 'pointer';
+                            canvas.title = `When feeling ${emotion}, your ${hoveredPart} feels ${emotionData.description}`;
+                        } else {
+                            canvas.style.cursor = 'default';
+                            canvas.title = '';
+                        }
+                    }
+                });
+                
+                // Click interaction
+                canvas.addEventListener('click', (e) => {
+                    if (!gameState.bodyMap.selectedEmotion) {
+                        showFeedback('Please select an emotion first!');
+                        return;
+                    }
+                    
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    for (const [part, data] of Object.entries(bodyParts)) {
+                        if ('radius' in data) {
+                            const dist = Math.sqrt((x - data.x) ** 2 + (y - data.y) ** 2);
+                            if (dist <= data.radius) {
+                                const emotion = gameState.bodyMap.selectedEmotion;
+                                const emotionData = gameState.bodyMap.emotions[emotion];
+                                
+                                if (emotionData.areas.includes('whole') || emotionData.areas.includes(part)) {
+                                    // Visual feedback
+                                    ctx.fillStyle = emotionData.color + '80'; // 50% opacity
+                                    ctx.beginPath();
+                                    ctx.arc(data.x, data.y, data.radius * 1.5, 0, Math.PI * 2);
+                                    ctx.fill();
+                                    
+                                    showFeedback(`Good! When feeling ${emotion}, your ${part} feels it!`);
+                                    addStars(2);
+                                } else {
+                                    showFeedback(`Interesting! When ${emotion}, your ${part} might not feel as affected.`);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                });
+            }
+            
+            drawBody();
+        }
+
+        // Module 2: Body Response Quiz
+        function loadBodyQuiz() {
+            gameState.quiz.currentQuestion = 0;
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const question = gameState.quiz.questions[gameState.quiz.currentQuestion];
+            
+            gameTitle.textContent = `Body Response Quiz - Question ${gameState.quiz.currentQuestion + 1}`;
+            gameContent.innerHTML = `
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div style="background: #E3F2FD; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                        <h3 style="color: #1565C0; margin-bottom: 15px; font-size: 1.5rem;">${question.question}</h3>
+                    </div>
+                    
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+            `;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            question.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'quiz-option';
+                optionEl.textContent = option;
+                optionEl.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(optionEl);
+            });
+            
+            nextBtn.classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = gameState.quiz.questions[gameState.quiz.currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach((opt, index) => {
+                opt.style.pointerEvents = 'none';
+                if (index === question.correct) {
+                    opt.classList.add('correct');
+                } else if (index === selectedIndex && index !== question.correct) {
+                    opt.classList.add('wrong');
+                }
+            });
+            
+            if (selectedIndex === question.correct) {
+                showFeedback('Correct! 🎉 You understand body signals well!');
+                addStars(3);
+            } else {
+                showFeedback(`Good try! The correct answer is: ${question.options[question.correct]}`);
+            }
+            
+            nextBtn.classList.remove('hidden');
+        }
+
+        // Module 3: Emotion Sound Quiz
+        function loadSoundQuiz() {
+            gameState.soundQuiz.currentSound = 0;
+            showSoundQuestion();
+        }
+
+        function showSoundQuestion() {
+            const sound = gameState.soundQuiz.sounds[gameState.soundQuiz.currentSound];
+            
+            gameTitle.textContent = 'Emotion Sound Quiz';
+            gameContent.innerHTML = `
+                <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    <div style="background: #FFF3E0; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">${sound.emoji}</div>
+                        <h3 style="color: #EF6C00; margin-bottom: 15px;">Body Clue:</h3>
+                        <p style="font-size: 1.3rem; color: #555;">"${sound.bodyClue}"</p>
+                    </div>
+                    
+                    <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">
+                        What emotion do you think this is?
+                    </p>
+                    
+                    <div class="sound-board">
+                        <button class="sound-btn" onclick="guessSound('happy')">Happy 😊</button>
+                        <button class="sound-btn" onclick="guessSound('sad')">Sad 😢</button>
+                        <button class="sound-btn" onclick="guessSound('angry')">Angry 😠</button>
+                        <button class="sound-btn" onclick="guessSound('scared')">Scared 😨</button>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="primary-btn" onclick="playSoundHint()">
+                            🔊 Play Sound Hint
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            nextBtn.classList.add('hidden');
+        }
+
+        function guessSound(emotion) {
+            const sound = gameState.soundQuiz.sounds[gameState.soundQuiz.currentSound];
+            
+            if (emotion === sound.emotion) {
+                showFeedback(`Correct! 🎉 That's ${emotion}! You're good at reading body clues!`);
+                addStars(3);
+            } else {
+                showFeedback(`Good try! This body clue shows ${sound.emotion}.`);
+            }
+            
+            nextBtn.classList.remove('hidden');
+        }
+
+        function playSoundHint() {
+            const sound = gameState.soundQuiz.sounds[gameState.soundQuiz.currentSound];
+            const sounds = {
+                happy: 'Laughter: "Hahaha!"',
+                sad: 'Crying: "Sniff... sniff..."',
+                angry: 'Growling: "Grrr!"',
+                scared: 'Gasp: "Ah! Eek!"'
+            };
+            
+            showFeedback(`Sound hint: ${sounds[sound.emotion]}`);
+            addStars(1);
+        }
+
+        // Module 4: Calming Tools
+        function loadCalmTools() {
+            gameTitle.textContent = 'Calming Tools';
+            gameContent.innerHTML = `
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div style="background: #E8F5E9; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                        <h3 style="color: #2E7D32; margin-bottom: 15px; font-size: 1.5rem;">When emotions feel big, try these tools:</h3>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+                        <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <h4 style="color: #1565C0; margin-bottom: 15px;">🌬️ Flower Breathing</h4>
+                            <p style="color: #555; margin-bottom: 20px;">Pretend you're smelling a flower, then blowing dandelion seeds.</p>
+                            <button class="primary-btn" onclick="startBreathingExercise()">Start Breathing</button>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <h4 style="color: #1565C0; margin-bottom: 15px;">👣 Grounding Game: 5-4-3-2-1</h4>
+                            <p style="color: #555; margin-bottom: 20px;">Find: 5 things you see, 4 things you feel, 3 things you hear, 2 things you smell, 1 thing you taste.</p>
+                            <button class="primary-btn" onclick="startGroundingGame()">Start Game</button>
+                        </div>
+                    </div>
+                    
+                    <div id="exerciseArea"></div>
+                </div>
+            `;
+        }
+
+        function startBreathingExercise() {
+            gameContent.querySelector('#exerciseArea').innerHTML = `
+                <div class="breathing-animation">
+                    <div class="breath-circle" id="breathCircle">Breathe In</div>
+                    <div class="breath-text" id="breathText">Smell the flower... 🌸</div>
+                    <div style="margin-top: 30px;">
+                        <button class="secondary-btn" onclick="loadCalmTools()">Back to Tools</button>
+                    </div>
+                </div>
+            `;
+            
+            const circle = document.getElementById('breathCircle');
+            const text = document.getElementById('breathText');
+            let cycle = 0;
+            const maxCycles = 3;
+            
+            function breathingCycle() {
+                // Breathe in
+                circle.textContent = 'Breathe In';
+                circle.style.transform = 'scale(1.5)';
+                circle.style.backgroundColor = '#81d4fa';
+                text.textContent = 'Smell the flower... 🌸';
+                
+                setTimeout(() => {
+                    // Hold
+                    circle.textContent = 'Hold';
+                    text.textContent = 'Feel the calm... ☁️';
+                    
+                    setTimeout(() => {
+                        // Breathe out
+                        circle.textContent = 'Breathe Out';
+                        circle.style.transform = 'scale(1)';
+                        circle.style.backgroundColor = '#4fc3f7';
+                        text.textContent = 'Blow the dandelion... 🌬️';
+                        
+                        setTimeout(() => {
+                            cycle++;
+                            if (cycle < maxCycles) {
+                                breathingCycle();
+                            } else {
+                                text.textContent = 'Great job! Your body feels calmer now! 🎉';
+                                addStars(2);
+                            }
+                        }, 4000);
+                    }, 2000);
+                }, 4000);
+            }
+            
+            breathingCycle();
+        }
+
+        function startGroundingGame() {
+            let step = 0;
+            const steps = [
+                { sense: 'see', number: 5, emoji: '👀', prompt: 'Look around and name 5 things you can see.' },
+                { sense: 'feel', number: 4, emoji: '✋', prompt: 'Notice 4 things you can feel (like your clothes or chair).' },
+                { sense: 'hear', number: 3, emoji: '👂', prompt: 'Listen for 3 sounds you can hear.' },
+                { sense: 'smell', number: 2, emoji: '👃', prompt: 'Find 2 things you can smell or like to smell.' },
+                { sense: 'taste', number: 1, emoji: '👅', prompt: 'Name 1 thing you can taste or like to taste.' }
+            ];
+            
+            gameContent.querySelector('#exerciseArea').innerHTML = `
+                <div style="text-align: center; padding: 30px; background: #FFF3E0; border-radius: 15px;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">${steps[step].emoji}</div>
+                    <h3 style="color: #EF6C00; margin-bottom: 15px;">Step ${step + 1}/5: ${steps[step].sense.toUpperCase()}</h3>
+                    <p style="font-size: 1.3rem; color: #555; margin-bottom: 30px;">${steps[step].prompt}</p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 20px;">
+                        <button class="primary-btn" onclick="nextGroundingStep(${step})">I did it! Next</button>
+                        <button class="secondary-btn" onclick="loadCalmTools()">Back to Tools</button>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <div style="display: flex; justify-content: center; gap: 10px;">
+                            ${steps.map((_, i) => `
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: ${i <= step ? '#4CAF50' : '#E0E0E0'};"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            window.nextGroundingStep = function(currentStep) {
+                step = currentStep + 1;
+                if (step < steps.length) {
+                    startGroundingGame();
+                } else {
+                    gameContent.querySelector('#exerciseArea').innerHTML = `
+                        <div style="text-align: center; padding: 40px; background: #E8F5E9; border-radius: 15px;">
+                            <div style="font-size: 5rem; margin-bottom: 20px;">🎉</div>
+                            <h3 style="color: #2E7D32; margin-bottom: 15px;">Excellent Job!</h3>
+                            <p style="font-size: 1.3rem; color: #555; margin-bottom: 20px;">
+                                You completed the grounding exercise! Your body and mind feel more connected now.
+                            </p>
+                            <button class="primary-btn" onclick="loadCalmTools()">Back to Tools</button>
+                        </div>
+                    `;
+                    addStars(3);
+                }
+            };
+        }
+
+        // Module 5: Reaction Game
+        function loadReactionGame() {
+            gameState.currentScenario = 0;
+            showScenario();
+        }
+
+        function showScenario() {
+            const scenario = gameState.scenarios[gameState.currentScenario];
+            
+            gameTitle.textContent = 'Choose Your Reaction';
+            gameContent.innerHTML = `
+                <div style="max-width: 700px; margin: 0 auto;">
+                    <div class="scenario">
+                        <h3 style="color: #5D4037; margin-bottom: 15px;">Situation:</h3>
+                        <p style="font-size: 1.3rem; color: #333;">"${scenario.situation}"</p>
+                    </div>
+                    
+                    <h3 style="color: #1565C0; margin-bottom: 20px; text-align: center;">What would you do?</h3>
+                    
+                    <div class="reaction-options" id="reactionOptions"></div>
+                </div>
+            `;
+            
+            const optionsContainer = document.getElementById('reactionOptions');
+            scenario.reactions.forEach((reaction, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'reaction-option';
+                optionEl.innerHTML = `
+                    <h4 style="color: #5D4037; margin-bottom: 10px;">Option ${index + 1}</h4>
+                    <p style="color: #555;">${reaction.text}</p>
+                `;
+                optionEl.onclick = () => chooseReaction(index);
+                optionsContainer.appendChild(optionEl);
+            });
+            
+            nextBtn.classList.add('hidden');
+        }
+
+        function chooseReaction(choiceIndex) {
+            const scenario = gameState.scenarios[gameState.currentScenario];
+            const reaction = scenario.reactions[choiceIndex];
+            
+            showFeedback(reaction.message);
+            
+            if (reaction.outcome === 'positive') {
+                addStars(3);
+            } else if (reaction.outcome === 'neutral') {
+                addStars(1);
+            }
+            
+            nextBtn.classList.remove('hidden');
+        }
+
+        // Navigation
+        function handleNext() {
+            if (gameState.currentModule === 'bodyQuiz') {
+                gameState.quiz.currentQuestion++;
+                if (gameState.quiz.currentQuestion < gameState.quiz.questions.length) {
+                    showQuizQuestion();
+                } else {
+                    showFeedback('Quiz completed! You earned bonus stars! 🎉');
+                    addStars(5);
+                    setTimeout(() => loadModule('bodyQuiz'), 2000);
+                }
+            } else if (gameState.currentModule === 'soundQuiz') {
+                gameState.soundQuiz.currentSound++;
+                if (gameState.soundQuiz.currentSound < gameState.soundQuiz.sounds.length) {
+                    showSoundQuestion();
+                } else {
+                    showFeedback('Sound quiz completed! Great listening skills! 👂');
+                    addStars(5);
+                    setTimeout(() => loadModule('soundQuiz'), 2000);
+                }
+            } else if (gameState.currentModule === 'reactionGame') {
+                gameState.currentScenario++;
+                if (gameState.currentScenario < gameState.scenarios.length) {
+                    showScenario();
+                } else {
+                    showFeedback('All scenarios completed! You\'re an emotion expert! 🌟');
+                    addStars(5);
+                    setTimeout(() => loadModule('reactionGame'), 2000);
+                }
+            }
+            
+            nextBtn.classList.add('hidden');
+        }
+
+        function showFeedback(message) {
+            feedback.textContent = message;
+            feedback.className = 'feedback';
+            
+            if (message.includes('Correct') || message.includes('Great') || message.includes('Excellent')) {
+                feedback.classList.add('positive-feedback');
+            } else if (message.includes('try') || message.includes('Interesting')) {
+                feedback.classList.add('neutral-feedback');
+            }
+            
+            feedback.classList.remove('hidden');
+        }
+
+        // Make functions available globally for inline event handlers
+        window.guessSound = guessSound;
+        window.playSoundHint = playSoundHint;
+        window.startBreathingExercise = startBreathingExercise;
+        window.startGroundingGame = startGroundingGame;
+        window.nextGroundingStep = nextGroundingStep;
+        window.chooseReaction = chooseReaction;
+
+        // Start the game
+        init();
+        showMainMenu();
+    </script>
+</body>
+</html>
