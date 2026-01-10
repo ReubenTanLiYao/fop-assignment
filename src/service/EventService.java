@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EventService {
 
-    // Update base event + recurrent rule
+    // UPDATE base event + recurrent.csv
     public static boolean updateEvent(
             int eventId,
             Event updatedEvent,
@@ -32,7 +32,7 @@ public class EventService {
             CsvEventUtil.writeEvents(events);
 
             // update recurrent.csv
-            RecurrentEventUtil.updateRecurrentEvent(
+            RecurrentEventUtil.updateRecurrent(
                     eventId,
                     recurrentInterval,
                     recurrentTimes,
@@ -43,7 +43,7 @@ public class EventService {
         return updated;
     }
 
-    // Delete base event + recurrent rule
+    // DELETE base event + recurrent.csv
     public static boolean deleteEvent(int eventId) {
         List<Event> events = CsvEventUtil.readEvents();
         boolean removed = false;
