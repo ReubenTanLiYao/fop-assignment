@@ -11,7 +11,7 @@ public class FolderCreation{
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            System.out.println(folder.getAbsolutePath());/* , to get the folder path*/
+            /*System.out.println(folder.getAbsolutePath());, to get the folder path*/
             
 
         } catch(Exception e){
