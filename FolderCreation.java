@@ -4,13 +4,13 @@ public class FolderCreation{
     public static void createFolder(){
         try{
             String folderPath = "data";
-            String filePath = folderPath+File.separator+"events.csv";
-
             File folder = new File(folderPath);
 
             if (!folder.exists()) {
                 folder.mkdir();
             }
+            /*System.out.println(folder.getAbsolutePath()); , to get the folder path*/
+            
 
         } catch(Exception e){
             System.out.println("An error occurred while creating the folder:"+ e.getMessage());
