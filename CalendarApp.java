@@ -12,8 +12,8 @@ public class CalendarApp{
     public static void main(String[] args){
 
         //Additional Event Fields Test
-        AdditionalEventFields event1 = new AdditionalEventFields(1, "HI", "22", "DJAN");
-        AdditionalEventFields event2 = new AdditionalEventFields(2, "WANKER", "SIGMA", "DJANINY");
+        AdditionalEventFields event1 = new AdditionalEventFields(1, "TEST1", "TIME 1", "DJAN");
+        AdditionalEventFields event2 = new AdditionalEventFields(2, "TEST2", "TIME 2", "DJANINY");
 
         /*event1.addingNewFields();
         event2.addingNewFields();
@@ -33,3 +33,4 @@ public class CalendarApp{
         test.detectConflicts(events);
     }
 }
+
