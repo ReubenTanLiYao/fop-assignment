@@ -78,6 +78,9 @@ CONTRIBUTION
 
 CHALLENGES FACED
 
+One of the main challenges faced during the development of this project was managing recurring events using CSV files instead of a database. Since recurring events are stored separately from base events, additional logic was required to generate repeated occurrences dynamically and merge them with normal events during searching and viewing. This was resolved by generating recurring events in memory and treating them as regular events during processing, which simplified the overall design.
+
+Another challenge was ensuring correct file input and output handling across different computers. File path issues initially caused errors when reading and writing CSV files. This was addressed by using relative paths and Java’s File.separator, allowing the application to run consistently on different systems without modifying the code.
 
 
 
