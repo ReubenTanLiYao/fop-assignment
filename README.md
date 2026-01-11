@@ -65,16 +65,16 @@ SCREENSHOTS
 
 CONTRIBUTION
 
-Conflict Detection (Arieth Thaqif bin Arnizzam)
-Additional Event Fields (Arieth Thaqif bin Arnizzam)
-Event Statistics (Reuben Tan Li Yao)
-Event Advanced Search & Filter (Reuben Tan Li Yao)
-Event Basic Search（Lin Shao Jie）
-View Calendar (Lee Xian Zheng)
-Backup and Restore（Liu Yu Hang）
-Recurring Events (Reuben Tan Li Yao)
-Event Update & Delete (Johan Yeong)
-Event Creation (Lee Xian Zheng)
+1. Event Creation (Lee Xian Zheng)
+2. Event Update & Delete (Johan Yeong)
+3. Recurring Events (Reuben Tan Li Yao)
+4. Backup and Restore（Liu Yu Hang）
+5. View Calendar (Lee Xian Zheng)
+6. Event Basic Search（Lin Shao Jie）
+7. Event Advanced Search & Filter (Reuben Tan Li Yao)
+8. Event Statistics (Reuben Tan Li Yao)
+9. Additional Event Fields (Arieth Thaqif bin Arnizzam)
+10. Conflict Detection (Arieth Thaqif bin Arnizzam)
 
 CHALLENGES FACED
 
