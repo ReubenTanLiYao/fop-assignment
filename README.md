@@ -90,9 +90,9 @@ CONTRIBUTION
 1. Event Creation (Lee Xian Zheng)
 2. Event Update & Delete (Johan Yeong)
 3. Recurring Events (Reuben Tan Li Yao)
-4. Backup and Restore（Liu Yu Hang）
+4. Backup and Restore (Liu Yu Hang)
 5. View Calendar (Lee Xian Zheng)
-6. Event Basic Search（Lin Shao Jie）
+6. Event Basic Search (Lin Shao Jie)
 7. Event Advanced Search & Filter (Reuben Tan Li Yao)
 8. Event Statistics (Reuben Tan Li Yao)
 9. Additional Event Fields (Arieth Thaqif bin Arnizzam)
