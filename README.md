@@ -53,6 +53,13 @@ Conflict Detection (completed)
 The Conflict Detection feature checks whether a newly created event overlaps in time with existing events. If a scheduling conflict is detected, the system displays the events, notifying the user.This allows the user to spot conflicting events and make necessary changes.
 This feature deserves extra marks because it requires comparing time ranges and handling logical edge cases. It improves the reliability of the scheduler and reflects real-world calendar behavior. Implementing conflict detection shows an understanding of time-based logic and practical application design.
 
+SYSTEM REQUIREMENTS 
+
+- Java Runtime (JRE): Version 24 or later is mandatory for execution.
+- Java Development Kit (JDK): Version 24 or higher required for building/compiling.
+- Build Tool: Apache Maven 3.x.
+- Operating System: Windows, macOS, or Linux (cross-platform compatible).
+
 
 HOW TO COMPILE AND RUN
 
