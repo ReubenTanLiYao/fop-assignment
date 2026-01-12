@@ -35,7 +35,7 @@ Event Basic Search (completed)
 
 Event Advanced Search & Filter (completed)
 
-The Event Advanced Search feature allows users to search for events using more detailed criteria beyond basic date-based searching. Users can filter events by event title keywords, date ranges, and event duration. This makes it easier to locate specific events, especially when the number of scheduled events increases.
+The Event Advanced Search feature allows users to search for events using more detailed criteria beyond basic date-based searching. Users can filter events by event title keywords, date ranges, event duration,event location, event type and event attendees. This makes it easier to locate specific events, especially when the number of scheduled events increases.
 This feature merits extra marks because it demonstrates the ability to process and filter stored data dynamically using multiple conditions. It also shows a deeper understanding of file reading, string processing, and logical comparisons, as well as improving overall usability of the application.
 
 Event Statistics (completed)
@@ -50,12 +50,28 @@ This feature merits extra marks as it shows extensibility in system design. By s
 
 Conflict Detection (completed)
 
-The Conflict Detection feature checks whether a newly created event overlaps in time with existing events. If a scheduling conflict is detected, the system alerts the user and prevents the creation of overlapping events. This ensures that users do not accidentally schedule two events at the same time.
+The Conflict Detection feature checks whether a newly created event overlaps in time with existing events. If a scheduling conflict is detected, the system displays the events, notifying the user.This allows the user to spot conflicting events and make necessary changes.
 This feature deserves extra marks because it requires comparing time ranges and handling logical edge cases. It improves the reliability of the scheduler and reflects real-world calendar behavior. Implementing conflict detection shows an understanding of time-based logic and practical application design.
 
 
 HOW TO COMPILE AND RUN
 
+1.RUNNING ON Terminal
+- Download the Calendar Folder
+- Go to Calendar Folder
+- Run the RunMenu.bat file
+
+2.RUNNING ON NetBeans
+- Download the FOP_Assignment folder
+- Open the project in netbeans
+- Locate the source codes in FOP_Assignment -> Source Packages -> com.test.calendar
+- Run the project
+
+3.RUNNING ON Visual Studio Code(VSC)
+- Download the FOP_Assignment folder
+- Open the folder in VSC
+- Locate the source codes in FOP_Assignment\src\main\java\com\test\calendar
+- Run the project
 
 
 SCREENSHOTS
@@ -79,8 +95,6 @@ CHALLENGES FACED
 
 One of the main challenges faced during the development of this project was managing recurring events using CSV files instead of a database. Since recurring events are stored separately from base events, additional logic was required to generate repeated occurrences dynamically and merge them with normal events during searching and viewing. This was resolved by generating recurring events in memory and treating them as regular events during processing, which simplified the overall design.
 
-Another challenge was ensuring correct file input and output handling across different computers. File path issues initially caused errors when reading and writing CSV files. This was addressed by using relative paths and Java’s File.separator, allowing the application to run consistently on different systems without modifying the code.
-
-
-
+Another challenge faced was the portability of the program. Hardcoding the file path initially caused errors when reading and writing CSV files when used on another system. The issue was tackled by implementiong
+a FolderCreation and FileCreation class that creates the directory "data" which stores the csv files needed for the program to run, thus standardizing the file paths. Furthermore, by using relative paths and File.separatorm, the program to run consistently across different systems.
  
