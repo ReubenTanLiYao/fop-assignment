@@ -1,0 +1,4 @@
+eventId,title,date,startTime,endTime
+1,Meeting,2026-01-10,10:00,11:00
+2,Class,2026-01-11,14:00,16:00
+3,ConflictTest,2026-01-10,10:00,11:00
