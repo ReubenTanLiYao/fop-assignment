@@ -48,7 +48,7 @@ public class RecurringEvents {
             } 
             else if (option.equals("2")) {
                 
-                DateTimeFormatter dFmt = DateTimeFormatter.ofPattern("d-m-yyyy");
+                DateTimeFormatter dFmt = DateTimeFormatter.ofPattern("d-M-yyyy");
 
                 while (true) {
                     System.out.println("Enter end date (d-m-yyyy, e.g., 31-12-2026):");
@@ -121,4 +121,5 @@ public class RecurringEvents {
         }
         return null;
     }
+
 }
